@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        @apply bg-primary font-body;
+    }
+}
+
+@layer components {
+    .container-page {
+        @apply w-full max-w-[1350px] mx-auto px-5;
+    }
+}
