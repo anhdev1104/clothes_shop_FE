@@ -1,6 +1,4 @@
 import { useHomeData } from '../contexts/homeContext';
-import Footer from '../layouts/Footer';
-import Header from '../layouts/Header';
 import Insta from '../layouts/Insta';
 import Sliders from '../layouts/Sliders';
 const HomePage = () => {
@@ -8,7 +6,6 @@ const HomePage = () => {
 
     return (
         <>
-            <Header />
             <section className="mt-[93px]">
                 <Sliders />
                 <section>
@@ -54,7 +51,6 @@ const HomePage = () => {
                 </section>
                 <Insta />
             </section>
-            <Footer />
         </>
     );
 };

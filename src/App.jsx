@@ -1,11 +1,15 @@
 import { HomeProvider } from './contexts/homeContext';
+import Footer from './layouts/Footer';
+import Header from './layouts/Header';
 import HomePage from './pages/HomePage';
 
 function App() {
     return (
         <>
             <HomeProvider>
-                <HomePage></HomePage>
+                <Header />
+                <HomePage />
+                <Footer />
             </HomeProvider>
         </>
     );
