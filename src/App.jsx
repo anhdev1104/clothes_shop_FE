@@ -1,15 +1,15 @@
 import { HomeProvider } from './contexts/homeContext';
-import Footer from './layouts/Footer';
-import Header from './layouts/Header';
-import HomePage from './pages/HomePage';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import AppRouter from './routes/router';
 
 function App() {
     return (
         <>
             <HomeProvider>
-                <Header />
-                <HomePage />
-                <Footer />
+                <Router>
+                    <AppRouter />
+                </Router>
             </HomeProvider>
         </>
     );

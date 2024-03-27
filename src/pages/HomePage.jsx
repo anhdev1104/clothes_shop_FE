@@ -1,8 +1,12 @@
+import { Link } from 'react-router-dom';
 import { useHomeData } from '../contexts/homeContext';
 import Insta from '../layouts/Insta';
 import Sliders from '../layouts/Sliders';
+import LimitProduct from '../utils/LimitProduct';
+
 const HomePage = () => {
     const { product, category } = useHomeData();
+    const products = LimitProduct(product, 8);
 
     return (
         <>
@@ -10,13 +14,13 @@ const HomePage = () => {
                 <Sliders />
                 <section>
                     <h1 className="text-center mt-[60px] mb-5 text-3xl">
-                        <a href="" className="hover:opacity-55">
+                        <Link to={`/category/${category[0]?._id}`} className="hover:opacity-55">
                             NEW ARRIVAL
-                        </a>
+                        </Link>
                     </h1>
                     <div className="container-page">
                         <div className="flex flex-wrap mx-[-10px]">
-                            {product?.map(product => (
+                            {products?.map(product => (
                                 <div className="px-[10px] mb-5 max-w-[25%] select-none" key={product._id}>
                                     <a href="" className="block relative overflow-hidden mb-[10px] group">
                                         <img
@@ -42,12 +46,12 @@ const HomePage = () => {
                             ))}
                         </div>
                     </div>
-                    <a
-                        href={`/category/${category[0]?._id}`}
+                    <Link
+                        to={`/category/${category[0]?._id}`}
                         className="h-[50px] w-[220px] bg-transparent flex justify-center items-center border-solid border-2 border-second mt-4 mx-auto mb-10 uppercase font-bold text-base transition-all ease-in-out duration-200 hover:bg-second hover:text-primary"
                     >
                         Xem thêm
-                    </a>
+                    </Link>
                 </section>
                 <Insta />
             </section>

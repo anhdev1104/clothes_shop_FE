@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import Menu from './Menu';
 
 const Header = () => {
     return (
         <header className="w-full bg-primary border-b border-solid border-[#e3ddbb] py-[1px] fixed top-0 left-0 right-0 z-10">
             <section className="container-page flex justify-between items-center gap-5">
-                <a href="/" className="block select-none">
+                <Link to="/" className="block select-none">
                     <img src="../src/assets/images/logo.svg" alt="" />
-                </a>
+                </Link>
                 <div className="flex-1">
                     <div className="flex justify-end items-center gap-8 mt-1">
                         <div className="flex items-center gap-2 hover:text-slate-500 hover:transition-all">

@@ -11,6 +11,7 @@ const Insta = () => {
                 {instagram.map(ins => (
                     <div className="mb-5 w-full max-w-[33.3333333333%] px-[10px] select-none" key={ins._id}>
                         <img
+                            loading="lazy"
                             src={`./src/assets/images/${ins.instaImage}`}
                             alt=""
                             className="w-full h-full object-cover"

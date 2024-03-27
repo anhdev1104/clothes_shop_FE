@@ -6,8 +6,8 @@ const homeContext = createContext();
 
 function HomeProvider({ children }) {
     const [category, setCategory] = useState([]);
-    const [categoryHome, setCategoryHome] = useState([]);
     const [product, setProduct] = useState([]);
+    const [categoryHome, setCategoryHome] = useState([]);
     const [instagram, setInstagram] = useState([]);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function HomeProvider({ children }) {
     }, [category]);
 
     useEffect(() => {
-        const productHome = categoryHome.productID;
+        const productHome = categoryHome?.productID;
         setProduct(productHome);
     }, [categoryHome?.productID]);
 
