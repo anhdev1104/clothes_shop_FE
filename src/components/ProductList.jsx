@@ -4,7 +4,6 @@ import LimitProduct from '../utils/LimitProduct';
 
 const ProductList = ({ id, limit, skip }) => {
     const { name: categoryName, productID: products } = ProductOfCate(id);
-
     const productPage = LimitProduct(products, limit, skip);
 
     return (

@@ -1,10 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
+import MainLayout from '../layouts/MainLayout';
+
 import HomePage from '../pages/HomePage';
 import ProductPage from '../pages/ProductPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import MainLayout from '../layouts/MainLayout';
-import ScrollToTop from '../utils/ScollToTop';
 import Collection from '../pages/Collection';
+
+import ScrollToTop from '../utils/ScrollToTop';
+import ShowFashion from '../pages/ShowFashion';
 
 const clientRouter = [
     {
@@ -14,6 +17,10 @@ const clientRouter = [
     {
         path: '/collection',
         element: Collection,
+    },
+    {
+        path: '/showfashion',
+        element: ShowFashion,
     },
     {
         path: '/',

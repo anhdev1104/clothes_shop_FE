@@ -1,4 +1,8 @@
+import { useState } from 'react';
+
 const ProductItem = ({ product }) => {
+    const [isFavourite, setFavourite] = useState(false);
+
     return (
         <div className="px-[10px] mb-5 max-w-[33.3333333333%] flex-shrink-0 flex-grow-0 select-none">
             <a href="" className="block relative overflow-hidden mb-[10px] group">
@@ -22,8 +26,13 @@ const ProductItem = ({ product }) => {
                         {product.priceOrigin.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}đ
                     </span>
                 </div>
-                <i className="heart-icon heart fa-regular fa-heart cursor-pointer p-1"></i>
-                <i className="heart-icon heart-red fa-solid fa-heart cursor-pointer text-red-500 p-1 hidden"></i>
+                <div className="heart-icons" onClick={() => setFavourite(!isFavourite)}>
+                    {!isFavourite ? (
+                        <i className="heart-icon heart fa-regular fa-heart cursor-pointer p-1"></i>
+                    ) : (
+                        <i className="heart-icon heart-red fa-solid fa-heart cursor-pointer text-red-500 p-1"></i>
+                    )}
+                </div>
             </div>
             <div className="font-light text-sm my-2 cursor-pointer transition-all ease-linear duration-75 hover:font-bold">
                 <a href="/product/{product[0]}">{product.name}</a>

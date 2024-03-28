@@ -6,7 +6,7 @@ import LimitProduct from '../utils/LimitProduct';
 
 const HomePage = () => {
     const { product, category } = useHomeData();
-    const products = LimitProduct(product, 8);
+    const products = LimitProduct(product, 8, 1);
 
     return (
         <>
