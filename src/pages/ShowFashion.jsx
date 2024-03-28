@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import getAllShowFashion from '../services/showFashion';
+import Button from '../components/Button';
 
 const ShowFashion = () => {
     const [showFashion, setShowFashion] = useState([]);
@@ -27,12 +28,7 @@ const ShowFashion = () => {
                     </div>
                 ))}
             </div>
-            <a
-                href="#!"
-                className="h-[50px] w-[220px] bg-transparent flex justify-center items-center border-solid border-2 border-second ml-[10px] mb-10 uppercase font-bold text-base transition-all ease-in-out duration-200 hover:bg-second hover:text-primary"
-            >
-                VIEW MORE +
-            </a>
+            <Button title="view more +" />
         </section>
     );
 };

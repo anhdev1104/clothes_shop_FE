@@ -12,4 +12,47 @@
     .container-page {
         @apply w-full max-w-[1350px] mx-auto px-5;
     }
+
+    .overlay {
+        animation: fadeIn ease-in-out 0.2s;
+    }
+
+    .box-modal {
+        animation: showFadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes showFadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-650px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .detail-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .favorite-list {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .favorite-list::-webkit-scrollbar {
+        display: none;
+    }
 }

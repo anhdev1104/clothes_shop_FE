@@ -1,18 +1,23 @@
 import { Route, Routes } from 'react-router-dom';
+import ScrollToTop from '../utils/ScrollToTop';
+
 import MainLayout from '../layouts/MainLayout';
 
 import HomePage from '../pages/HomePage';
 import ProductPage from '../pages/ProductPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Collection from '../pages/Collection';
-
-import ScrollToTop from '../utils/ScrollToTop';
 import ShowFashion from '../pages/ShowFashion';
+import ProductDetails from '../pages/ProductDetails';
 
 const clientRouter = [
     {
         path: 'category/:id',
         element: ProductPage,
+    },
+    {
+        path: 'products/:id',
+        element: ProductDetails,
     },
     {
         path: '/collection',

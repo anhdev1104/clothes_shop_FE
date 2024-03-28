@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import getAllCollection from '../services/collection';
+import Button from '../components/Button';
 
 const Collection = () => {
     const [collection, setCollection] = useState([]);
@@ -29,12 +30,7 @@ const Collection = () => {
                     </div>
                 ))}
             </div>
-            <a
-                href="#!"
-                className="h-[50px] w-[220px] bg-transparent flex justify-center items-center border-solid border-2 border-second mx-auto mb-10 uppercase font-bold text-base transition-all ease-in-out duration-200 hover:bg-second hover:text-primary"
-            >
-                VIEW MORE +
-            </a>
+            <Button title="View more +" center />
         </section>
     );
 };

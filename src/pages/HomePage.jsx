@@ -3,10 +3,11 @@ import { useHomeData } from '../contexts/homeContext';
 import Insta from '../layouts/Insta';
 import Sliders from '../layouts/Sliders';
 import LimitProduct from '../utils/LimitProduct';
+import Button from '../components/Button';
 
 const HomePage = () => {
     const { product, category } = useHomeData();
-    const products = LimitProduct(product, 8, 1);
+    const products = LimitProduct(product, 8, 0);
 
     return (
         <>
@@ -22,7 +23,10 @@ const HomePage = () => {
                         <div className="flex flex-wrap mx-[-10px]">
                             {products?.map(product => (
                                 <div className="px-[10px] mb-5 max-w-[25%] select-none" key={product._id}>
-                                    <a href="" className="block relative overflow-hidden mb-[10px] group">
+                                    <Link
+                                        to={`/products/${product._id}`}
+                                        className="block relative overflow-hidden mb-[10px] group"
+                                    >
                                         <img
                                             src={`./src/assets/images/${product.images[0]}`}
                                             alt=""
@@ -33,7 +37,7 @@ const HomePage = () => {
                                             alt=""
                                             className="transition-all max-w-full ease-in duration-300 absolute top-0 left-0 opacity-0 group-hover:opacity-100"
                                         />
-                                    </a>
+                                    </Link>
                                     <div className="flex items-center justify-between">
                                         <span className="font-bold text-second">
                                             {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}đ
@@ -46,12 +50,7 @@ const HomePage = () => {
                             ))}
                         </div>
                     </div>
-                    <Link
-                        to={`/category/${category[0]?._id}`}
-                        className="h-[50px] w-[220px] bg-transparent flex justify-center items-center border-solid border-2 border-second mt-4 mx-auto mb-10 uppercase font-bold text-base transition-all ease-in-out duration-200 hover:bg-second hover:text-primary"
-                    >
-                        Xem thêm
-                    </Link>
+                    <Button category={category} title="xem thêm" center />
                 </section>
                 <Insta />
             </section>
