@@ -56,7 +56,6 @@ const ProductDetails = () => {
     const handleActiveSize = event => {
         size.forEach(item => item.classList.remove('text-white', '!font-bold', '!bg-second'));
         event.target.classList.add('text-white', '!font-bold', '!bg-second');
-        console.log(event.target);
         setInnerSize(event.target.textContent);
     };
 

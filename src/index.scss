@@ -3,56 +3,80 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply bg-primary font-body;
-    }
+  body {
+    @apply bg-primary font-body;
+  }
 }
 
 @layer components {
-    .container-page {
-        @apply w-full max-w-[1350px] mx-auto px-5;
+  .container-page {
+    @apply w-full max-w-[1350px] mx-auto px-5;
+  }
+
+  .overlay {
+    animation: fadeIn ease-in-out 0.2s;
+  }
+
+  .box-modal {
+    animation: showFadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
     }
 
-    .overlay {
-        animation: fadeIn ease-in-out 0.2s;
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes showFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-650px);
     }
 
-    .box-modal {
-        animation: showFadeIn 0.4s ease;
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
 
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
+  .detail-scroll::-webkit-scrollbar {
+    display: none;
+  }
 
-        100% {
-            opacity: 1;
-        }
-    }
+  .favorite-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-    @keyframes showFadeIn {
-        0% {
-            opacity: 0;
-            transform: translateY(-650px);
-        }
+  .favorite-list::-webkit-scrollbar {
+    display: none;
+  }
 
-        100% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+  .cart-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    .detail-scroll::-webkit-scrollbar {
-        display: none;
-    }
+  .cart-scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(114, 114, 114, 0.3);
+    border-radius: 8px;
+  }
 
-    .favorite-list {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+  .cart-scroll::-webkit-scrollbar-thumb {
+    background-color: rgb(205, 205, 205);
+    border-radius: 8px;
+  }
 
-    .favorite-list::-webkit-scrollbar {
-        display: none;
-    }
+  #cart::after {
+    content: '';
+    border: solid 10px transparent;
+    border-top: none !important;
+    border-bottom-color: #ffffff;
+    position: absolute;
+    top: -10px;
+    right: 25px;
+  }
 }

@@ -48,7 +48,7 @@ const RandomProduct = () => {
         listProduct.current.addEventListener('wheel', scrollWheel);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        return () => listProduct.current.removeEventListener('wheel', scrollWheel);
+        return () => listProduct.current?.removeEventListener('wheel', scrollWheel);
     }, []);
 
     return (
