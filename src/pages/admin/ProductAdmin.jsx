@@ -8,6 +8,18 @@ import { API_URL } from '../../api/config';
 const ProductAdmin = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
+  const [newProduct, setNewProduct] = useState({
+    name: '',
+    images: '',
+    priceOrgin: '',
+    price: '',
+    description: '',
+  });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(newProduct);
+  };
 
   useEffect(() => {
     (async () => {
@@ -40,7 +52,12 @@ const ProductAdmin = () => {
               <div className="w-full md:w-1/2 px-4">
                 <div className="bg-white rounded-lg p-8">
                   <h2 className="text-xl font-semibold mb-4">Thêm sản phẩm mới</h2>
-                  <form action={`${API_URL}/products`} method="POST" encType="multipart/form-data" id="addProduct">
+                  <form
+                    onSubmit={handleSubmit}
+                    action={`${API_URL}/products`}
+                    encType="multipart/form-data"
+                    id="addProduct"
+                  >
                     <div className="mb-4">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nameProduct">
                         Tên sản phẩm
@@ -51,6 +68,7 @@ const ProductAdmin = () => {
                         name="name"
                         type="text"
                         placeholder="Nhập tên sản phẩm"
+                        onChange={e => setNewProduct({ ...newProduct, name: e.target.value })}
                       />
                     </div>
                     <div className="mb-4">
@@ -64,6 +82,7 @@ const ProductAdmin = () => {
                         type="file"
                         placeholder="Nhập hình ảnh sản phẩm"
                         multiple
+                        onChange={e => setNewProduct({ ...newProduct, images: [e.target.value] })}
                       />
                     </div>
                     <div className="mb-4">
@@ -76,6 +95,7 @@ const ProductAdmin = () => {
                         name="priceOrigin"
                         type="text"
                         placeholder="Nhập giá sản phẩm"
+                        onChange={e => setNewProduct({ ...newProduct, priceOrgin: e.target.value })}
                       />
                     </div>
                     <div className="mb-4">
@@ -88,6 +108,7 @@ const ProductAdmin = () => {
                         name="price"
                         type="text"
                         placeholder="Nhập giá sale sản phẩm"
+                        onChange={e => setNewProduct({ ...newProduct, price: e.target.value })}
                       />
                     </div>
                     <div className="mb-4">
@@ -100,6 +121,7 @@ const ProductAdmin = () => {
                         name="description"
                         type="text"
                         placeholder="Nhập mô tả sản phẩm"
+                        onChange={e => setNewProduct({ ...newProduct, description: e.target.value })}
                       />
                     </div>
 
@@ -110,7 +132,7 @@ const ProductAdmin = () => {
                       <div className="flex flex-col gap-3 mt-2">
                         <div className="flex items-center justify-evenly gap-5">
                           <label className="inline-flex items-center" htmlFor="sizeS">
-                            <input type="checkbox" className="form-checkbox text-blue-500" id="sizeS" name="size" />
+                            <input type="checkbox" className="form-checkbox text-blue-500" id="sizeS" name="sizeS" />
                             <span className="ml-2">S</span>
                           </label>
                           <input
