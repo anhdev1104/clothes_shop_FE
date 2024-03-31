@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SidebarAdmin from './components/SidebarAdmin';
-import { getAllProduct } from '../../services/products';
-import { Link } from 'react-router-dom';
+import { addProduct, deleteProduct, getAllProduct } from '../../services/products';
+
 import { getAllCategory } from '../../services/category';
 import { API_URL } from '../../api/config';
+import ListProduct from './components/ListProduct';
 
 const ProductAdmin = () => {
   const [products, setProducts] = useState([]);
@@ -11,24 +12,80 @@ const ProductAdmin = () => {
   const [newProduct, setNewProduct] = useState({
     name: '',
     images: '',
-    priceOrgin: '',
+    priceOrigin: '',
     price: '',
     description: '',
+    size: [],
+    categoryID: '',
+    isActive: '',
   });
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(newProduct);
+    const newProductAdd = await addProduct(newProduct);
+    setProducts(prevProducts => [...prevProducts, newProductAdd]);
+    formRef.current && formRef.current.reset();
+  };
+
+  const handleImages = e => {
+    const listImages = e.target.files;
+    const images = [...listImages].map(image => image.name);
+    setNewProduct({ ...newProduct, images });
+  };
+
+  const formRef = useRef();
+
+  const sizeSRef = useRef(null);
+  const sizeMRef = useRef(null);
+  const sizeLRef = useRef(null);
+
+  const sizeSQuantityRef = useRef(null);
+  const sizeMQuantityRef = useRef(null);
+  const sizeLQuantityRef = useRef(null);
+
+  const handleSizeChange = (sizeLabel, quantity = null, isChecked = null) => {
+    setNewProduct(prevState => {
+      const sizeIndex = prevState.size.findIndex(size => size.label === sizeLabel);
+      // Nếu kích cỡ không tồn tại trong mảng và được chọn, thêm nó vào
+      if (sizeIndex === -1 && isChecked) {
+        return {
+          ...prevState,
+          size: [...prevState.size, { label: sizeLabel, quantity: parseInt(quantity) || 0 }],
+        };
+      } else if (sizeIndex !== -1) {
+        // Nếu kích cỡ tồn tại và không được chọn, loại bỏ nó
+        if (isChecked === false) {
+          return {
+            ...prevState,
+            size: prevState.size.filter(size => size.label !== sizeLabel),
+          };
+        }
+        // Nếu kích cỡ tồn tại và số lượng được cập nhật
+        const newSize = { ...prevState.size[sizeIndex], quantity: parseInt(quantity) || 0 };
+        return {
+          ...prevState,
+          size: [...prevState.size.slice(0, sizeIndex), newSize, ...prevState.size.slice(sizeIndex + 1)],
+        };
+      }
+      return prevState; // Trong trường hợp không có thay đổi
+    });
   };
 
   useEffect(() => {
     (async () => {
       const data = await getAllProduct();
-      const sortProduct = data.reverse();
-      setProducts(sortProduct);
+      setProducts(data);
       setCategory(await getAllCategory());
     })();
   }, []);
+
+  const handleDeleteProduct = async e => {
+    const id = e.target.dataset.id;
+    if (id) {
+      const { acknowledged } = await deleteProduct(id);
+      acknowledged && setProducts(currentProducts => currentProducts.filter(product => product._id !== id));
+    }
+  };
 
   return (
     <>
@@ -57,6 +114,7 @@ const ProductAdmin = () => {
                     action={`${API_URL}/products`}
                     encType="multipart/form-data"
                     id="addProduct"
+                    ref={formRef}
                   >
                     <div className="mb-4">
                       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nameProduct">
@@ -82,7 +140,7 @@ const ProductAdmin = () => {
                         type="file"
                         placeholder="Nhập hình ảnh sản phẩm"
                         multiple
-                        onChange={e => setNewProduct({ ...newProduct, images: [e.target.value] })}
+                        onChange={handleImages}
                       />
                     </div>
                     <div className="mb-4">
@@ -95,7 +153,7 @@ const ProductAdmin = () => {
                         name="priceOrigin"
                         type="text"
                         placeholder="Nhập giá sản phẩm"
-                        onChange={e => setNewProduct({ ...newProduct, priceOrgin: e.target.value })}
+                        onChange={e => setNewProduct({ ...newProduct, priceOrigin: +e.target.value })}
                       />
                     </div>
                     <div className="mb-4">
@@ -108,7 +166,7 @@ const ProductAdmin = () => {
                         name="price"
                         type="text"
                         placeholder="Nhập giá sale sản phẩm"
-                        onChange={e => setNewProduct({ ...newProduct, price: e.target.value })}
+                        onChange={e => setNewProduct({ ...newProduct, price: +e.target.value })}
                       />
                     </div>
                     <div className="mb-4">
@@ -132,7 +190,14 @@ const ProductAdmin = () => {
                       <div className="flex flex-col gap-3 mt-2">
                         <div className="flex items-center justify-evenly gap-5">
                           <label className="inline-flex items-center" htmlFor="sizeS">
-                            <input type="checkbox" className="form-checkbox text-blue-500" id="sizeS" name="sizeS" />
+                            <input
+                              type="checkbox"
+                              className="form-checkbox text-blue-500"
+                              id="sizeS"
+                              name="sizeS"
+                              ref={sizeSRef}
+                              onChange={e => handleSizeChange('S', sizeSQuantityRef.current.value, e.target.checked)}
+                            />
                             <span className="ml-2">S</span>
                           </label>
                           <input
@@ -140,11 +205,21 @@ const ProductAdmin = () => {
                             type="text"
                             placeholder="Nhập số lượng"
                             id="quantitySizeS"
+                            ref={sizeSQuantityRef}
+                            onBlur={() =>
+                              handleSizeChange('S', sizeSQuantityRef.current.value, sizeSRef.current.checked)
+                            }
                           />
                         </div>
                         <div className="flex items-center justify-evenly gap-5">
                           <label className="inline-flex items-center" htmlFor="sizeM">
-                            <input type="checkbox" className="form-checkbox text-blue-500" id="sizeM" />
+                            <input
+                              type="checkbox"
+                              className="form-checkbox text-blue-500"
+                              id="sizeM"
+                              ref={sizeMRef}
+                              onChange={e => handleSizeChange('M', sizeMQuantityRef.current.value, e.target.checked)}
+                            />
                             <span className="ml-2">M</span>
                           </label>
                           <input
@@ -152,11 +227,21 @@ const ProductAdmin = () => {
                             type="text"
                             placeholder="Nhập số lượng"
                             id="quantitySizeM"
+                            ref={sizeMQuantityRef}
+                            onBlur={() =>
+                              handleSizeChange('M', sizeMQuantityRef.current.value, sizeMRef.current.checked)
+                            }
                           />
                         </div>
                         <div className="flex items-center justify-evenly gap-5">
                           <label className="inline-flex items-center" htmlFor="sizeL">
-                            <input type="checkbox" className="form-checkbox text-blue-500" id="sizeL" />
+                            <input
+                              type="checkbox"
+                              className="form-checkbox text-blue-500"
+                              id="sizeL"
+                              ref={sizeLRef}
+                              onChange={e => handleSizeChange('L', sizeLQuantityRef.current.value, e.target.checked)}
+                            />
                             <span className="ml-2">L</span>
                           </label>
                           <input
@@ -164,6 +249,10 @@ const ProductAdmin = () => {
                             type="text"
                             placeholder="Nhập số lượng"
                             id="quantitySizeL"
+                            ref={sizeLQuantityRef}
+                            onBlur={() =>
+                              handleSizeChange('L', sizeLQuantityRef.current.value, sizeLRef.current.checked)
+                            }
                           />
                         </div>
                       </div>
@@ -176,6 +265,7 @@ const ProductAdmin = () => {
                         className="block appearance-none w-full border rounded px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="category"
                         name="categoryID"
+                        onChange={e => setNewProduct({ ...newProduct, categoryID: e.target.value })}
                       >
                         <option value="">Chọn danh mục</option>
                         {category?.map(category => (
@@ -193,6 +283,7 @@ const ProductAdmin = () => {
                         className="block appearance-none w-full border rounded px-3 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="statusProduct"
                         name="isActive"
+                        onChange={e => setNewProduct({ ...newProduct, isActive: +e.target.value })}
                       >
                         <option value="">Chọn trạng thái</option>
                         <option value="1">Hiển thị sản phẩm</option>
@@ -211,51 +302,7 @@ const ProductAdmin = () => {
                   </form>
                 </div>
               </div>
-              <div className="w-full md:w-1/2 px-4">
-                <div className="bg-white rounded-lg p-8 mr-[-4px]">
-                  <h2 className="text-xl font-semibold mb-4">Danh sách sản phẩm</h2>
-                  <div className="overflow-auto max-h-[813px] cart-scroll">
-                    <table className="w-full">
-                      <thead>
-                        <tr>
-                          <th className="text-center">Ảnh sản phẩm</th>
-                          <th className="text-center">Tên sản phẩm</th>
-                          <th className="text-center">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {products?.map(product => (
-                          <tr key={product._id}>
-                            <td className="border p-2 w-[120px] h-[140px]">
-                              <img
-                                loading="lazy"
-                                src={`../../src/assets/images/${product.images[0]}`}
-                                alt=""
-                                className=""
-                              />
-                            </td>
-                            <td className="border p-2">{product.name}</td>
-                            <td className="border p-2 w-24">
-                              <Link
-                                to={`/admin/products/${product._id}`}
-                                className="block p-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white text-center mb-1"
-                              >
-                                Chi tiết
-                              </Link>
-                              <button
-                                data-id={`${product._id}`}
-                                className="btn-delete min-w-24 p-2 rounded-md bg-red-500 hover:bg-red-600 text-white text-center"
-                              >
-                                Xoá
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+              <ListProduct products={products} onClick={handleDeleteProduct} />
             </div>
           </div>
         </div>
