@@ -20,11 +20,42 @@ const ProductAdmin = () => {
     isActive: '',
   });
 
+  const validateForm = () => {
+    // Kiểm tra các trường cần thiết
+    if (
+      !newProduct.name ||
+      !newProduct.images.length ||
+      !newProduct.priceOrigin ||
+      !newProduct.price ||
+      !newProduct.size.length ||
+      !newProduct.categoryID ||
+      newProduct.isActive === ''
+    ) {
+      // alert('Vui lòng nhập đầy đủ thông tin cho sản phẩm!');
+
+      return false; // Trả về false nếu có trường nào đó rỗng
+    }
+    return true; // Trả về true nếu tất cả các trường đã được nhập
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
-    const newProductAdd = await addProduct(newProduct);
-    setProducts(prevProducts => [...prevProducts, newProductAdd]);
-    formRef.current && formRef.current.reset();
+
+    if (validateForm()) {
+      const newProductAdd = await addProduct(newProduct);
+      setProducts(prevProducts => [...prevProducts, newProductAdd]);
+      formRef.current && formRef.current.reset();
+      setNewProduct({
+        name: '',
+        images: '',
+        priceOrigin: '',
+        price: '',
+        description: '',
+        size: [],
+        categoryID: '',
+        isActive: '',
+      });
+    }
   };
 
   const handleImages = e => {
@@ -80,6 +111,8 @@ const ProductAdmin = () => {
   }, []);
 
   const handleDeleteProduct = async e => {
+    const isDelete = confirm('Bạn muốn xoá sản phẩm này khỏi trang web ?');
+    if (!isDelete) return;
     const id = e.target.dataset.id;
     if (id) {
       const { acknowledged } = await deleteProduct(id);
