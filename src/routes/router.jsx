@@ -2,18 +2,20 @@ import { Route, Routes } from 'react-router-dom';
 import ScrollToTop from '../utils/ScrollToTop';
 
 import MainLayout from '../layouts/MainLayout';
-
+// Pages Client
 import HomePage from '../pages/HomePage';
 import ProductPage from '../pages/ProductPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import Collection from '../pages/Collection';
 import ShowFashion from '../pages/ShowFashion';
 import ProductDetails from '../pages/ProductDetails';
+// Pages Admin
 import DashboardPage from '../pages/admin';
 import ProductAdmin from '../pages/admin/ProductAdmin';
 import ProductDetailAdmin from '../pages/admin/ProductDetailAdmin';
 import LayoutAdmin from '../layouts/admin/LayoutAdmin';
 import UpdateProduct from '../pages/admin/UpdateProduct';
+import CategoryAdmin from '../pages/admin/CategoryAdmin';
 
 const clientRouter = [
   {
@@ -50,6 +52,10 @@ const adminRouter = [
   {
     path: 'admin/products',
     element: ProductAdmin,
+  },
+  {
+    path: 'admin/categories',
+    element: CategoryAdmin,
   },
   {
     path: 'admin',
