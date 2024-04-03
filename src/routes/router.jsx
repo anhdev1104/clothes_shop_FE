@@ -11,6 +11,9 @@ import ShowFashion from '../pages/ShowFashion';
 import ProductDetails from '../pages/ProductDetails';
 import DashboardPage from '../pages/admin';
 import ProductAdmin from '../pages/admin/ProductAdmin';
+import ProductDetailAdmin from '../pages/admin/ProductDetailAdmin';
+import LayoutAdmin from '../layouts/admin/LayoutAdmin';
+import UpdateProduct from '../pages/admin/UpdateProduct';
 
 const clientRouter = [
   {
@@ -37,12 +40,20 @@ const clientRouter = [
 
 const adminRouter = [
   {
-    path: 'dashboard',
-    element: DashboardPage,
+    path: 'admin/products/:id',
+    element: ProductDetailAdmin,
+  },
+  {
+    path: 'admin/updateproduct/:id',
+    element: UpdateProduct,
   },
   {
     path: 'admin/products',
     element: ProductAdmin,
+  },
+  {
+    path: 'admin',
+    element: DashboardPage,
   },
 ];
 
@@ -56,9 +67,11 @@ const AppRouter = () => {
             <Route key={route.path} path={route.path} element={<route.element />} />
           ))}
         </Route>
-        {adminRouter?.map(route => (
-          <Route key={route.path} path={route.path} element={<route.element />} />
-        ))}
+        <Route path="/" element={<LayoutAdmin />}>
+          {adminRouter?.map(route => (
+            <Route key={route.path} path={route.path} element={<route.element />} />
+          ))}
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

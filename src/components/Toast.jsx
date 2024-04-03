@@ -1,5 +1,5 @@
-function Toast({ title = '', message = '', type = '', duration = 3000 }) {
-  const main = document.querySelector('#toast');
+function Toast(mainRef, { title = '', message = '', type = '', duration = 3000 }) {
+  const main = mainRef.current;
 
   if (main) {
     const toast = document.createElement('div');

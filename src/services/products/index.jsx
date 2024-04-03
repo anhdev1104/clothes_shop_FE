@@ -1,4 +1,4 @@
-import { addProductApi, deleteProductApi, productApi, productDetailApi } from '../../api/productApi';
+import { addProductApi, deleteProductApi, productApi, productDetailApi, updateProductApi } from '../../api/productApi';
 
 export const getAllProduct = async () => {
   try {
@@ -21,6 +21,15 @@ export const getProductDetail = async id => {
 export const addProduct = async newProduct => {
   try {
     const { data } = await addProductApi(newProduct);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatedProductApi = async (id, productUpdate) => {
+  try {
+    const { data } = await updateProductApi(id, productUpdate);
     return data;
   } catch (error) {
     console.log(error);
