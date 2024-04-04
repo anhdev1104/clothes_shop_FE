@@ -16,6 +16,7 @@ import ProductDetailAdmin from '../pages/admin/ProductDetailAdmin';
 import LayoutAdmin from '../layouts/admin/LayoutAdmin';
 import UpdateProduct from '../pages/admin/UpdateProduct';
 import CategoryAdmin from '../pages/admin/CategoryAdmin';
+import UpdateCategory from '../pages/admin/UpdateCategory';
 
 const clientRouter = [
   {
@@ -52,6 +53,10 @@ const adminRouter = [
   {
     path: 'admin/products',
     element: ProductAdmin,
+  },
+  {
+    path: 'admin/categories/:id',
+    element: UpdateCategory,
   },
   {
     path: 'admin/categories',

@@ -1,4 +1,10 @@
-import { addCategoryApi, categoryApi, categoryDetailApi, deleteCategoryApi } from '../../api/categoryApi';
+import {
+  addCategoryApi,
+  categoryApi,
+  categoryDetailApi,
+  deleteCategoryApi,
+  updateCategoryApi,
+} from '../../api/categoryApi';
 
 export const getAllCategory = async () => {
   try {
@@ -21,6 +27,15 @@ export const getDetailCategory = async (idCategory = '') => {
 export const addCategory = async newCategory => {
   try {
     const { data } = await addCategoryApi(newCategory);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatedCategory = async (id, category) => {
+  try {
+    const { data } = await updateCategoryApi(id, category);
     return data;
   } catch (error) {
     console.log(error);

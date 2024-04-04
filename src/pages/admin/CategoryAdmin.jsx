@@ -66,8 +66,6 @@ const CategoryAdmin = () => {
     }
   };
 
-  console.log(categories);
-
   const formRef = useRef();
   const toastRef = useRef();
 
