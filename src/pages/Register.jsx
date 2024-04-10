@@ -56,14 +56,10 @@ const Register = () => {
   const onSubmitHandler = async (values, event) => {
     try {
       event.preventDefault();
-      console.log(values);
       await addAccount(values);
-      const { fullname, email, phonenumber, address } = values;
+      const { fullname } = values;
       const userData = {
         fullname,
-        email,
-        phonenumber,
-        address,
       };
       localStorage.setItem('userData', JSON.stringify(userData));
       reset();
