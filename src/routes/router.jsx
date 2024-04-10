@@ -17,6 +17,8 @@ import LayoutAdmin from '../layouts/admin/LayoutAdmin';
 import UpdateProduct from '../pages/admin/UpdateProduct';
 import CategoryAdmin from '../pages/admin/CategoryAdmin';
 import UpdateCategory from '../pages/admin/UpdateCategory';
+import LoginPage from '../pages/LoginPage';
+import Register from '../pages/Register';
 
 const clientRouter = [
   {
@@ -68,6 +70,17 @@ const adminRouter = [
   },
 ];
 
+const accountRouter = [
+  {
+    path: 'login',
+    element: LoginPage,
+  },
+  {
+    path: 'register',
+    element: Register,
+  },
+];
+
 const AppRouter = () => {
   return (
     <>
@@ -83,6 +96,9 @@ const AppRouter = () => {
             <Route key={route.path} path={route.path} element={<route.element />} />
           ))}
         </Route>
+        {accountRouter.map(route => (
+          <Route key={route.path} path={route.path} element={<route.element />} />
+        ))}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

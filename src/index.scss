@@ -13,6 +13,27 @@
     @apply w-full max-w-[1350px] mx-auto px-5;
   }
 
+  /* header-user */
+  .block-user::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 15px;
+  }
+
+  .signout::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 8px 10px;
+    border-color: transparent transparent #fff transparent;
+    z-index: 99999999;
+  }
+
   .overlay {
     animation: fadeIn ease-in-out 0.2s;
   }

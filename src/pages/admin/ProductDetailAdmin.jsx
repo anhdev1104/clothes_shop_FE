@@ -52,8 +52,8 @@ const ProductDetailAdmin = () => {
                 <td className="border p-2 text-center w-36">
                   {product?.size?.map((item, index) => (
                     <div className="mb-2" key={index}>
-                      <span className="font-medium">{item?.label}</span>
-                      còn <span className="font-medium">{item?.quantity}</span> sp
+                      <span className="font-medium mr-2">{item?.label}</span>
+                      còn <span className="font-medium mx-1">{item?.quantity}</span> sp
                     </div>
                   ))}
                 </td>

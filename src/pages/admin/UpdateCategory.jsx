@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getDetailCategory, updatedCategory } from '../../services/category';
 
 const UpdateCategory = () => {
-  // const [categories, setCategories] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const { id } = useParams();
   const [updateCategory, setUpdateCategory] = useState({

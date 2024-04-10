@@ -1,63 +1,85 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Menu from './Menu';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
-    return (
-        <header className="w-full bg-primary border-b border-solid border-[#e3ddbb] py-[1px] fixed top-0 left-0 right-0 z-10">
-            <section className="container-page flex justify-between items-center gap-5">
-                <Link to="/" className="block select-none">
-                    <img src="../src/assets/images/logo.svg" alt="" />
-                </Link>
-                <div className="flex-1">
-                    <div className="flex justify-end items-center gap-8 mt-1">
-                        <div className="flex items-center gap-2 hover:text-slate-500 hover:transition-all">
-                            <i className="fa-regular fa-user"></i>
-                            {/* {storedUserData ? (
-                            <div className="block-user cursor-pointer ml-1 pt-1 relative group">
-                                <span>${storedUserData.fullname}</span>
-                                <div className="signout absolute shadow-md bg-white top-full mt-3 left-1/2 min-w-[150px] -translate-x-1/2 text-center text-sm font-light py-2 px-5 hover:text-red-400 hover:font-bold hidden group-hover:block">
-                                    Đăng xuất
-                                </div>
-                            </div>
-                        ) : ( */}
-                            <a href="/login">Login</a>
-                            {/* )} */}
-                        </div>
-                        <span className="text-gray-300 text-lg">|</span>
-                        <div
-                            className="cursor-pointer flex items-center gap-2 hover:text-slate-500 hover:transition-all"
-                            id="search"
-                        >
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                            <span>Tìm kiếm</span>
-                        </div>
-                        <span className="text-gray-300 text-lg">|</span>
-                        <div className={` text-xl transition-all relative`} title="giỏ hàng">
-                            {/* ${carts.length > 0 && 'notifiCart'} */}
-                            <i
-                                className="fa-solid fa-cart-shopping cursor-pointer hover:text-slate-500 hover:transition-all duration-700"
-                                id="cartIcon"
-                            ></i>
+  const [userData, setUserData] = useState([]);
 
-                            <div
-                                className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-40 z-20 items-center justify-center hidden overlay"
-                                id="overlayCart"
-                            >
-                                <div
-                                    className="absolute top-11 right-[75px] p-[30px] bg-white transition-all duration-200 ease-in"
-                                    id="cart"
-                                >
-                                    <span className="uppercase text-base font-medium text-second">Giỏ hàng</span>
+  useEffect(() => {
+    const storedUserDataJSON = localStorage.getItem('userData');
+    let storedUserData = false;
+    if (storedUserData !== null) {
+      storedUserData = JSON.parse(storedUserDataJSON);
+      setUserData(storedUserData);
+    }
+  }, []);
 
-                                    <div
-                                        className="absolute top-0 right-0 text-2xl cursor-pointer py-[10px] px-6 text-gray-500 transition-all ease-in duration-200 hover:text-[#a9a9a9]"
-                                        id="close-icon-cart"
-                                    >
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </div>
+  const navigate = useNavigate();
 
-                                    <ul className="mx-[-10px] mt-1 mb-3 overflow-y-auto max-h-[40vh] pr-3 cart-scroll">
-                                        {/* {carts.length === 0 ? (
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    navigate('/login');
+  };
+
+  return (
+    <header className="w-full bg-primary border-b border-solid border-[#e3ddbb] py-[1px] fixed top-0 left-0 right-0 z-10">
+      <section className="container-page flex justify-between items-center gap-5">
+        <Link to="/" className="block select-none">
+          <img src="../src/assets/images/logo.svg" alt="" />
+        </Link>
+        <div className="flex-1">
+          <div className="flex justify-end items-center gap-8 mt-1">
+            <div className="flex items-center gap-2 hover:text-slate-500 transition-all">
+              <i className="fa-regular fa-user"></i>
+              {userData ? (
+                <div className="block-user cursor-pointer ml-1 pt-1 relative group">
+                  <span>{userData?.fullname}</span>
+                  <div
+                    className="signout absolute shadow-md bg-white top-full mt-3 left-1/2 min-w-[150px] -translate-x-1/2 text-center text-sm font-light py-2 px-5 hover:text-red-400 hover:font-bold hidden group-hover:block transition-all"
+                    onClick={handleLogout}
+                  >
+                    Đăng xuất
+                  </div>
+                </div>
+              ) : (
+                <Link to="/login">Login</Link>
+              )}
+            </div>
+            <span className="text-gray-300 text-lg">|</span>
+            <div
+              className="cursor-pointer flex items-center gap-2 hover:text-slate-500 hover:transition-all"
+              id="search"
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+              <span>Tìm kiếm</span>
+            </div>
+            <span className="text-gray-300 text-lg">|</span>
+            <div className={` text-xl transition-all relative`} title="giỏ hàng">
+              {/* ${carts.length > 0 && 'notifiCart'} */}
+              <i
+                className="fa-solid fa-cart-shopping cursor-pointer hover:text-slate-500 hover:transition-all duration-700"
+                id="cartIcon"
+              ></i>
+
+              <div
+                className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-40 z-20 items-center justify-center hidden overlay"
+                id="overlayCart"
+              >
+                <div
+                  className="absolute top-11 right-[75px] p-[30px] bg-white transition-all duration-200 ease-in"
+                  id="cart"
+                >
+                  <span className="uppercase text-base font-medium text-second">Giỏ hàng</span>
+
+                  <div
+                    className="absolute top-0 right-0 text-2xl cursor-pointer py-[10px] px-6 text-gray-500 transition-all ease-in duration-200 hover:text-[#a9a9a9]"
+                    id="close-icon-cart"
+                  >
+                    <i className="fa-solid fa-xmark"></i>
+                  </div>
+
+                  <ul className="mx-[-10px] mt-1 mb-3 overflow-y-auto max-h-[40vh] pr-3 cart-scroll">
+                    {/* {carts.length === 0 ? (
                                         <span className="text-sm text-center font-light ml-5">
                                             Chưa có sản phẩm nào được thêm.
                                         </span>
@@ -116,34 +138,32 @@ const Header = () => {
                                             })
                                             .join('')
                                     )} */}
-                                    </ul>
-                                    <div className="flex items-center justify-between text-sm font-light mb-3">
-                                        <span>Tổng tiền tạm tính</span>
-                                        <span>
-                                            {/* {totalPriceCart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} VND */}
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center justify-between text-sm font-light">
-                                        <span className="text-[15px] font-bold uppercase">Tổng hoá đơn</span>
-                                        <span className="font-medium">
-                                            {/* {totalPriceCart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} VND */}
-                                        </span>
-                                    </div>
-                                    <a
-                                        href="/pay"
-                                        className="text-sm mt-4 block bg-[#444444] hover:opacity-80 transition-all duration-200 ease-linear text-white text-center py-2 font-medium"
-                                    >
-                                        ĐI TỚI ĐẶT HÀNG
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <Menu />
+                  </ul>
+                  <div className="flex items-center justify-between text-sm font-light mb-3">
+                    <span>Tổng tiền tạm tính</span>
+                    <span>{/* {totalPriceCart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} VND */}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm font-light">
+                    <span className="text-[15px] font-bold uppercase">Tổng hoá đơn</span>
+                    <span className="font-medium">
+                      {/* {totalPriceCart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} VND */}
+                    </span>
+                  </div>
+                  <Link
+                    href="/pay"
+                    className="text-sm mt-4 block bg-[#444444] hover:opacity-80 transition-all duration-200 ease-linear text-white text-center py-2 font-medium"
+                  >
+                    ĐI TỚI ĐẶT HÀNG
+                  </Link>
                 </div>
-            </section>
-        </header>
-    );
+              </div>
+            </div>
+          </div>
+          <Menu />
+        </div>
+      </section>
+    </header>
+  );
 };
 
 export default Header;
