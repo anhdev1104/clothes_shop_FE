@@ -35,17 +35,22 @@ const LoginPage = () => {
   const handleSubmitLogin = async (values, event) => {
     try {
       event.preventDefault();
-      await loginAccount(values);
+      const { accessToken } = await loginAccount(values);
+      localStorage.setItem('accessToken', accessToken);
       const { email } = values;
       const userLogin = await getAccountDetails(email);
-      console.log(userLogin);
-      const { fullname } = userLogin;
+
+      const { fullname, role } = userLogin;
       const userData = {
         fullname,
       };
       localStorage.setItem('userData', JSON.stringify(userData));
       reset();
-      navigate('/');
+      if (role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
       console.log(error);
       Toast(toastRef, {
@@ -57,7 +62,6 @@ const LoginPage = () => {
     }
   };
 
-  console.log(errors);
   const toastRef = useRef();
   return (
     <>

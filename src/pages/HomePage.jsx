@@ -41,7 +41,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div className="font-light text-sm my-2 cursor-pointer transition-all ease-linear duration-75 hover:font-bold">
-                    <a href="">{product.name}</a>
+                    <Link to={`/products/${product._id}`}>{product.name}</Link>
                   </div>
                 </div>
               ))}

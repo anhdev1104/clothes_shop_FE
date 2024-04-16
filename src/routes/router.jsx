@@ -19,6 +19,8 @@ import CategoryAdmin from '../pages/admin/CategoryAdmin';
 import UpdateCategory from '../pages/admin/UpdateCategory';
 import LoginPage from '../pages/LoginPage';
 import Register from '../pages/Register';
+import Customer from '../pages/admin/Customer';
+import SearchPage from '../pages/SearchPage';
 
 const clientRouter = [
   {
@@ -36,6 +38,10 @@ const clientRouter = [
   {
     path: 'showfashion',
     element: ShowFashion,
+  },
+  {
+    path: 'search',
+    element: SearchPage,
   },
   {
     path: '/',
@@ -63,6 +69,10 @@ const adminRouter = [
   {
     path: 'admin/categories',
     element: CategoryAdmin,
+  },
+  {
+    path: 'admin/customer',
+    element: Customer,
   },
   {
     path: 'admin',

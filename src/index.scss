@@ -164,4 +164,25 @@
   .toast--error .toast__icon {
     color: #dd4747;
   }
+
+  /* notifiCart */
+  .notifiCart::before {
+    content: attr(data-cart);
+    font-size: 8px;
+    font-weight: 500;
+    text-align: right;
+    color: white;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #dd4747;
+    z-index: 2;
+    top: -4px;
+    right: -10px;
+    border: 2px solid #f6f3e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
